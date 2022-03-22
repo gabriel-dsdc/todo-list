@@ -5,4 +5,13 @@ function createItem() {
   document.getElementById('lista-tarefas').appendChild(newItem);
   userInput.value = '';
 }
-document.getElementById('criar-tarefa').addEventListener('click', createItem);
+
+document.addEventListener('click', (event) => {
+  const clicked = event.target;
+  if (clicked.id === 'criar-tarefa') {
+    createItem();
+  }
+  if (clicked.tagName === 'LI') {
+    clicked.style.backgroundColor = 'gray';
+  }
+}, false);
