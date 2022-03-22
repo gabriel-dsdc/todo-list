@@ -6,12 +6,20 @@ function createItem() {
   userInput.value = '';
 }
 
+function resetBackgroundColor() {
+  const allItems = document.getElementById('lista-tarefas').getElementsByTagName('li');
+  Object.keys(allItems).forEach((key) => {
+    allItems[key].style.backgroundColor = null;
+  });
+}
+
 document.addEventListener('click', (event) => {
   const clicked = event.target;
   if (clicked.id === 'criar-tarefa') {
     createItem();
   }
   if (clicked.tagName === 'LI') {
+    resetBackgroundColor();
     clicked.style.backgroundColor = 'gray';
   }
 }, false);
