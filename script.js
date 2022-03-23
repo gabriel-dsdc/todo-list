@@ -13,8 +13,16 @@ function resetBackgroundColor() {
   });
 }
 
+function removeFinishedTasks(list) {
+  const allFinished = list.querySelectorAll('.completed');
+  Object.keys(allFinished).forEach((key) => {
+    list.removeChild(allFinished[key]);
+  });
+}
+
 document.addEventListener('click', (event) => {
   const clicked = event.target;
+  const list = document.getElementById('lista-tarefas');
   if (clicked.id === 'criar-tarefa') {
     createItem();
   }
@@ -23,7 +31,10 @@ document.addEventListener('click', (event) => {
     clicked.style.backgroundColor = 'gray';
   }
   if (clicked.id === 'apaga-tudo') {
-    document.getElementById('lista-tarefas').innerHTML = null;
+    list.innerHTML = null;
+  }
+  if (clicked.id === 'remover-finalizados') {
+    removeFinishedTasks(list);
   }
 }, false);
 
