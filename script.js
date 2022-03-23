@@ -1,4 +1,5 @@
 const list = document.getElementById('lista-tarefas');
+const allItems = list.getElementsByTagName('li');
 list.innerHTML = localStorage.getItem('savedTasks');
 
 function createItem() {
@@ -9,10 +10,9 @@ function createItem() {
   userInput.value = '';
 }
 
-function resetBackgroundColor() {
-  const allItems = list.getElementsByTagName('li');
+function resetSelected() {
   Object.keys(allItems).forEach((key) => {
-    allItems[key].style.backgroundColor = null;
+    allItems[key].classList.remove('selected');
   });
 }
 
@@ -33,17 +33,77 @@ function taskRemover(event) {
   }
 }
 
+function taskSelector(event) {
+  const clicked = event.target;
+  if (clicked.tagName === 'LI' && clicked.classList.contains('selected') !== true) {
+    resetSelected();
+    clicked.classList.add('selected');
+  } /* else {
+      resetSelected();
+    } */
+}
+
+function findCurrentSelected() {
+  for (let index = 0; index < allItems.length; index += 1) {
+    if (allItems[index].classList.contains('selected')) {
+      return index;
+    }
+  }
+}
+
+function moveUp(event) {
+  const clicked = event.target;
+  if (clicked.id === 'mover-cima') {
+    const index = findCurrentSelected();
+
+    if (index - 1 >= 0) {
+      const position = allItems[index].innerHTML;
+      allItems[index].innerHTML = allItems[index - 1].innerHTML;
+      allItems[index - 1].innerHTML = position;
+
+      const pClass = allItems[index].className;
+      allItems[index].className = allItems[index - 1].className;
+      allItems[index - 1].className = pClass;
+    }
+  }
+}
+
+function moveDown(event) {
+  const clicked = event.target;
+  if (clicked.id === 'mover-baixo') {
+    const index = findCurrentSelected();
+
+    if (index + 1 < allItems.length) {
+      const position = allItems[index].innerHTML;
+      allItems[index].innerHTML = allItems[index + 1].innerHTML;
+      allItems[index + 1].innerHTML = position;
+
+      const pClass = allItems[index].className;
+      allItems[index].className = allItems[index + 1].className;
+      allItems[index + 1].className = pClass;
+    }
+  }
+}
+
+function moveTask(event) {
+  moveUp(event);
+  moveDown(event);
+}
+
+function otherListFeatures(event) {
+  taskRemover(event);
+  taskSelector(event);
+  moveTask(event);
+}
+
 document.addEventListener('click', (event) => {
   const clicked = event.target;
   if (clicked.id === 'criar-tarefa') {
     createItem();
   } else if (clicked.id === 'salvar-tarefas') {
     localStorage.setItem('savedTasks', list.innerHTML);
-  } else if (clicked.tagName === 'LI') {
-    resetBackgroundColor();
-    clicked.style.backgroundColor = 'gray';
   } else {
-    taskRemover(event);
+    otherListFeatures(event);
   }
 }, false);
 
