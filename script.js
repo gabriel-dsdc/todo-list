@@ -1,40 +1,49 @@
+const list = document.getElementById('lista-tarefas');
+list.innerHTML = localStorage.getItem('savedTasks');
+
 function createItem() {
   const userInput = document.getElementById('texto-tarefa');
   const newItem = document.createElement('li');
   newItem.innerText = userInput.value;
-  document.getElementById('lista-tarefas').appendChild(newItem);
+  list.appendChild(newItem);
   userInput.value = '';
 }
 
 function resetBackgroundColor() {
-  const allItems = document.getElementById('lista-tarefas').getElementsByTagName('li');
+  const allItems = list.getElementsByTagName('li');
   Object.keys(allItems).forEach((key) => {
     allItems[key].style.backgroundColor = null;
   });
 }
 
-function removeFinishedTasks(list) {
+function removeFinishedTasks() {
   const allFinished = list.querySelectorAll('.completed');
   Object.keys(allFinished).forEach((key) => {
     list.removeChild(allFinished[key]);
   });
 }
 
-document.addEventListener('click', (event) => {
+function taskRemover(event) {
   const clicked = event.target;
-  const list = document.getElementById('lista-tarefas');
-  if (clicked.id === 'criar-tarefa') {
-    createItem();
-  }
-  if (clicked.tagName === 'LI') {
-    resetBackgroundColor();
-    clicked.style.backgroundColor = 'gray';
-  }
   if (clicked.id === 'apaga-tudo') {
     list.innerHTML = null;
   }
   if (clicked.id === 'remover-finalizados') {
-    removeFinishedTasks(list);
+    removeFinishedTasks();
+  }
+}
+
+document.addEventListener('click', (event) => {
+  const clicked = event.target;
+  if (clicked.id === 'criar-tarefa') {
+    createItem();
+  } else if (clicked.id === 'salvar-tarefas') {
+    localStorage.setItem('savedTasks', list.innerHTML);
+  } else if (clicked.tagName === 'LI') {
+    resetBackgroundColor();
+    clicked.style.backgroundColor = 'gray';
+  } else {
+    taskRemover(event);
   }
 }, false);
 
