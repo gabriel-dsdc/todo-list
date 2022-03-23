@@ -22,6 +22,9 @@ document.addEventListener('click', (event) => {
     resetBackgroundColor();
     clicked.style.backgroundColor = 'gray';
   }
+  if (clicked.id === 'apaga-tudo') {
+    document.getElementById('lista-tarefas').innerHTML = null;
+  }
 }, false);
 
 document.addEventListener('dblclick', (event) => {
