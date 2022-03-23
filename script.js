@@ -23,3 +23,12 @@ document.addEventListener('click', (event) => {
     clicked.style.backgroundColor = 'gray';
   }
 }, false);
+
+document.addEventListener('dblclick', (event) => {
+  const clicked = event.target;
+  if (clicked.tagName === 'LI' && clicked.classList.contains('completed') !== true) {
+    clicked.classList.add('completed');
+  } else {
+    clicked.classList.remove('completed');
+  }
+}, false);
