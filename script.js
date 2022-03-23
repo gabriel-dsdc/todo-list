@@ -90,10 +90,19 @@ function moveTask(event) {
   moveDown(event);
 }
 
+function removeSelected(event) {
+  const clicked = event.target;
+  if (clicked.id === 'remover-selecionado') {
+    const index = findCurrentSelected();
+    list.removeChild(allItems[index]);
+  }
+}
+
 function otherListFeatures(event) {
   taskRemover(event);
   taskSelector(event);
   moveTask(event);
+  removeSelected(event);
 }
 
 document.addEventListener('click', (event) => {
