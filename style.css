@@ -1,7 +1,72 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+input {
+  border-radius: .25rem;
+  border: 0;
+  outline: 3px solid gray;
+  padding: .375rem .75rem;
+}
+
+input:focus {
+  outline: 3px solid rgb(0, 123, 255);
+}
+
+button {
+  background-color: #007bff;
+  border-radius: .25rem;
+  color: white;
+  font-weight: 400;
+  padding: .375rem .75rem;
+}
+
+button:hover {
+  background-color: rgb(0, 105, 217);
+  cursor: pointer;
+}
+
+#salvar-tarefas {
+  background-color: #28a745;
+}
+
+#remover-selecionado, #remover-finalizados {
+  background-color: #dc3545;
+}
+
+#apaga-tudo {
+  background-color: #ffc107;
+}
+
+li {
+  border: 1px solid black;
+  border-radius: .25rem;
+  padding: .375rem .75rem;
+  text-align: left;
+  margin: .375rem 0;
+  position: relative;
+}
+
 .completed {
   text-decoration: line-through;
 }
 
-.selected {
-  background-color: gray;
+.completed::after {
+  content: "";
+  background-color: black;
+  position: absolute;
+  top: 50%;
+  left: 3%;
+  height: 1px;
+  width: calc(98% - 3%);
+}
+
+li:focus, .selected {
+  background-color: #0dcaf0;
+  font-weight: 700;
+}
+
+li input {
+  margin-right: 10px;
 }
